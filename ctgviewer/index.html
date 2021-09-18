@@ -6,6 +6,84 @@
 <html>
     <head>
         <style>
+            fhr-viewer-scrollbar {
+                position:absolute;
+                right:0;
+                top:9px;
+                left:330px;
+                background-color: rgba(0,0,0,0.05);
+                box-shadow: inset 1px 1px 16px rgba(0,0,0,0.1);
+                border-radius: 10px;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                display:block;
+                height: 22px;
+                margin: 0;
+            }
+            .scrollbarDraggerBar {
+                /* height:100%; */
+                background-color: #777;
+                box-shadow: inset 1px 0 0 rgba(255,255,255,0.4), inset -1px 0 0 rgba(0,0,0,0.2);
+                height: 18px;
+                margin: 2px;
+                position: absolute;
+                width: auto;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                /* -webkit-border-radius: 8px; */
+                /* -moz-border-radius: 8px; */
+                border-radius: 8px;
+            }
+            .scrollbarDragger {
+                position: absolute;
+                min-width: 30px;
+                display: block;
+                /* width: 10%; */
+                max-width: 100%;
+                /* left: 0; */
+                height:100%;
+                cursor: pointer;
+                z-index:1
+            }
+            .controllers {
+                margin-bottom:8px;
+                position:relative;
+                height:40px;
+            }
+            .controller-icons {
+                position:absolute;
+                left:0;
+                top:0;
+                width:330px;
+                padding:0 5px;
+                
+            }
+            .btn {
+                cursor: pointer;
+                display: inline-block;
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 1.42857143;
+                white-space: nowrap;
+                border: 1px solid transparent;
+                border-radius: 4px;
+                touch-action: manipulation;
+            }
+            .btn-default {
+                color: #333;
+                background-color: #fff;
+                border-color: #ccc;
+                }
+            .btn-fhr-icons{
+                text-align:center;
+                vertical-align:middle;
+                padding:0px;
+                width:40px;
+                height:40px;
+                margin:0 5px;
+            }
             .root{
                 margin:0;
                 padding:0
@@ -24,7 +102,7 @@
                 width: 1680px;
                 height: 25px;
                 cursor: row-resize;
-                background-image: url('./resizeimage.bmp');
+                background-image: url('./images/resizeimage.bmp');
                 background-repeat: no-repeat;
                 background-position: center center;
             }
@@ -33,6 +111,34 @@
     <body class="root">
         <div>
             <canvas id="canvas" class="canvas"></canvas>
+            <div class="controllers">
+                <div class="controller-icons">
+                    <button type="button" class="btn btn-default btn-fhr-icons">
+                        <img src="images/leftarrow.png" style="height: 20px;"></img>
+                    </button>
+                    <button type="button" class="btn btn-default btn-fhr-icons">
+                        <img src="images/rightarrow.png" style="height: 20px;"></img>
+                    </button>
+                    <button type="button" class="btn btn-default btn-fhr-icons" data-toggle="button" aria-pressed="true">
+                        <img src="images/measure.png" style="height: 35px;"></img>
+                    </button>
+                    <button type="button" class="btn btn-default btn-fhr-icons active" data-toggle="button" aria-pressed="true">
+                        <img src="images/event.png" style="height: 35px;"></img>
+                    </button>
+                    <button type="button" class="btn btn-default btn-fhr-icons">
+                        <img src="images/print.png" style="height: 20px;"></img>
+                    </button>
+                    <button type="button" class="btn btn-default btn-fhr-icons">
+                        <img src="images/morpho.png" style="height: 20px;"></img>
+                    </button>
+                </div>
+                <fhr-viewer-scrollbar>
+                    <div class="scrollbarDragger" style="width: 22.2624%; left: 0%;">
+                        <div class="scrollbarDraggerBar">
+                        </div>
+                    </div>
+                </fhr-viewer-scrollbar>
+            </div>
            <div id='divider' class="divider"></div>
         </div>
     </body>
