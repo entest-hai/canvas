@@ -34,18 +34,27 @@
         </div>
     </body>
     <script>
+        // 
+        canvasWidth = 2195 
         // set up canvas size and context 
         canvas = document.getElementById("canvas")
-        canvas.width = window.innerWidth
+        // get canvas context 
+        context = canvas.getContext('2d')
+        // set up canvas with and height 
+        canvas.width = canvasWidth 
         canvas.height = window.innerHeight/2
+        canvas.style.width = `${canvasWidth}px`
+        canvas.style.height = `${window.innerHeight/2}px`
+        context.scale(2,2)
+        context.translate(0.5,0.5)
         // draw CTG 
-        // drawCTG()
+        drawCTG()
         // divider drage 
         dragElement(document.getElementById('divider'))
         // functions 
         function dragElement(element){
             
-            console.log("canvas height", canvas.height, "divider", element.offsetTop)
+            console.log(canvas.width)
 
             var currentY = 0
             var dy = 0 
@@ -67,6 +76,7 @@
                 element.style.top = (element.offsetTop - dy) + "px"
                 canvas.height = element.offsetTop
                 console.log("canvas height", canvas.height, "divider", element.style.top)
+                drawCTG()
             }
 
             function closeDragElement(){
@@ -74,27 +84,18 @@
                 document.onmousemove = null;
             }
             
-            function reDrawCTG(){
-                var context = ctgcanvas.getContext('2d')
-                context.clearRect(0, 0, context.canvas.width, context.canvas.height); 
-                context.lineWidth = 1
-                context.beginPath()
-                context.moveTo(0,10)
-                context.lineTo(200,10)
-                context.strokeStyle = 'blue'
-                context.closePath()
-                context.stroke()
-            }
         }
 
         function drawCTG(){
             var context = canvas.getContext('2d')
-            context.lineWidth = 2
-            context.beginPath();
-            context.moveTo(0,10)
-            context.lineTo(1000,10)
-            context.strokeStyle = "black";
-            context.stroke();
+            context.lineWidth = 0.85
+            context.strokeStyle = "black"
+            for (var i = 0; i < 10; i++){
+                context.beginPath();
+                context.moveTo(0,10 + i*15)
+                context.lineTo(canvasWidth,10 + i*15)
+                context.stroke()
+            }
         }
     </script>
 </html>
