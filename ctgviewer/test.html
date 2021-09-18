@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <style>
+            .fhr-viewer-scrollbar {
+            position:absolute;
+            right:0;
+            top:9px;
+            left:0px;
+            background-color: rgba(0,0,0,0.05);
+            box-shadow: inset 1px 1px 16px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            display:block;
+            height: 22px;
+            margin: 0;
+        }
+        .scrollbarDraggerBar {
+            /* height:100%; */
+            background-color: #777;
+            box-shadow: inset 1px 0 0 rgba(255,255,255,0.4), inset -1px 0 0 rgba(0,0,0,0.2);
+            height: 18px;
+            margin: 2px;
+            position: absolute;
+            width: auto;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+        }
+        .scrollbarDragger {
+            position: absolute;
+            min-width: 30px;
+            display: block;
+            /* width: 10%; */
+            max-width: 100%;
+            left: 0px;
+            height:100%;
+            cursor: pointer;
+            z-index:1
+        }
+        </style>
+    </head>
+    <body>
+        <div class="fhr-viewer-scrollbar">
+            <div id="scrollbar" class="scrollbarDragger" style="width: 20%;">
+                <div class="scrollbarDraggerBar"></div>
+            </div>
+        </div>
+    </body>
+    <script>
+        var scrollbar = document.getElementById('scrollbar')
+        drag()
+        function drag(){
+            var currentX = 0 
+            var dx = 0 
+            scrollbar.onmousedown = drageMouseDown
+
+            function drageMouseDown(event){
+                currentX = event.clientX
+                console.log("current")
+                event = event || window.event;
+                event.preventDefault()
+                document.onmouseup = closeDragElement
+                document.onmousemove = elementDrag
+            }
+
+            function elementDrag(event){
+                dx = currentX - event.clientX
+                currentX = event.clientX
+                scrollbar.style.left = (scrollbar.offsetLeft - dx) + 'px'
+            }
+
+            function closeDragElement(event){
+                console.log("close drag")
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+    </script>
+</html>
