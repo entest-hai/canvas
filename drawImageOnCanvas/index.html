@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="style.css"  type="text/css" rel="stylesheet" media="all">
+    </head>
+    <body>
+        <div style="position: relative;">
+            <canvas id="canvas" width="3000px" height="700px" style="position: absolute; left: 0; top: 0;z-index:1;"></canvas>
+            <canvas id="ctgcanvas" width="3000px" height="700px" style="position: absolute; left: 0; top: 0;z-index:0;"></canvas>
+        </div>
+        <script>
+            //
+            let lineWidth = 1 
+            let isDrawing = false; 
+            let xStart = 0;
+            let yStart = 0; 
+            let annotateColor = "#fab6b1";
+            let annotateOpacity = 0.4;
+
+            // get ctgcanvas 
+            ctgcanvas = document.getElementById("ctgcanvas")
+            ctgcontext = ctgcanvas.getContext("2d")
+            ctgcontext.canvas.width = 3000*2;
+            ctgcontext.canvas.height = 700*2;
+            ctgcontext.scale(2,2);
+
+            // get canvas and context 
+            const canvas = document.getElementById("canvas")
+            const context = canvas.getContext("2d");
+            context.canvas.width = 3000*2;
+            context.canvas.height = 700*2;
+            context.scale(2,2);
+
+            // onload image 
+            const image = new Image();
+            image.onload = drawImage;
+            image.src = "./../images/STG049B_raw_ctg.png"
+            // function to draw image on canvas
+            function drawImage(){
+                ctgcontext.drawImage(image,0,0,image.width,image.height)
+            }
+            // detect mouse down 
+            canvas.addEventListener("mousedown", e =>{
+                // init left-corner 
+                xStart = e.offsetX;
+                yStart = e.offsetY; 
+                isDrawing = true; 
+            })
+
+            // detect mousemove 
+            canvas.addEventListener("mousemove", e => {
+                if (isDrawing === true){
+                    // clean rect 
+                    context.clearRect(0,0,canvas.width,canvas.height);
+                    // fill rect 
+                    context.fillStyle = annotateColor;
+                    context.globalAlpha = annotateOpacity
+                    context.fillRect(xStart,yStart,e.clientX-xStart,e.clientY-yStart);
+                    context.globalAlpha = 1.0
+                }
+            })
+
+            // detect mouse up 
+            window.addEventListener("mouseup", e => {
+                if (isDrawing === true) {
+                    context.clearRect(0,0,canvas.width,canvas.height);
+                    isDrawing = false; 
+                }
+            })
+
+            function drawLine(context, x1, y1, x2, y2) {
+                context.beginPath();
+                context.strokeStyle = 'black';
+                context.lineWidth = lineWidth;
+                context.moveTo(x1, y1);
+                context.lineTo(x2, y2);
+                context.stroke();
+                context.closePath();
+            }
+
+        </script>
+    </body>
+</html>

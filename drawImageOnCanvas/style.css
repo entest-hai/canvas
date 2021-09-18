@@ -1,0 +1,12 @@
+canvas {
+    border: 1px solid black;
+    width: 3000px;
+    height: 700px;
+}
+body {
+    margin: 0;
+}
+
+.test {
+    overflow: auto;
+}
