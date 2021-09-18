@@ -71,7 +71,10 @@
             function elementDrag(event){
                 dx = currentX - event.clientX
                 currentX = event.clientX
-                scrollbar.style.left = (scrollbar.offsetLeft - dx) + 'px'
+                if ((scrollbar.offsetLeft - dx + scrollbar.offsetWidth < window.innerWidth) && (scrollbar.offsetLeft-dx > 0)){
+                    scrollbar.style.left = (scrollbar.offsetLeft - dx) + 'px'
+                } 
+                console.log(scrollbar.offsetLeft, scrollbar.offsetWidth)
             }
 
             function closeDragElement(event){
