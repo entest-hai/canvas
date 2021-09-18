@@ -144,6 +144,8 @@
         </div>
     </body>
     <script>
+        //
+        var heartRateOffset = 0 
         // 1920x1080, 1680, 
         canvasWidth = 1680
         canvasHeight = 1080/2  
@@ -198,7 +200,7 @@
 
         function drawCTG(){
             // number of heart rate 240 values per minute 4Hz 
-            const numHeartRate = 60*240
+            const numHeartRate = 120*240
             console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
             // boxSize 
             var boxSize = canvas.height/2/22
@@ -246,7 +248,7 @@
             var y2 = 150.0; 
             context.lineWidth = 2
             context.strokeStyle = "red"
-            for (var i = 0; i < numHeartRate; i++){
+            for (var i = 0; i < numHeartRate - heartRateOffset; i++){
                     context.beginPath()
                     context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                     context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
@@ -255,7 +257,7 @@
                     x1 = x2
                     y1 = y2 
                     x2 = xOffset + i*boxSize/(2.0*120.0)
-                    y2 = 150.0 + 15.0*Math.sin(2.0*Math.PI*i/(10.0*240.0))
+                    y2 = 150.0 + 15.0*Math.sin(2.0*Math.PI*(i+heartRateOffset)/(10.0*240.0))
                     // console.log(i,x1,x2)
                 }
             // plot maternal heart rate 
@@ -265,7 +267,7 @@
             var y2 = 60.0; 
             context.lineWidth = 2
             context.strokeStyle = "blue"
-            for (var i = 0; i < numHeartRate; i++){
+            for (var i = 0; i < numHeartRate - heartRateOffset; i++){
                     context.beginPath()
                     context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                     context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
@@ -274,7 +276,7 @@
                     x1 = x2
                     y1 = y2 
                     x2 = xOffset + i*boxSize/(2.0*120.0)
-                    y2 = 60.0 + 5.0*Math.sin(2.0*Math.PI*i/(15.0*240.0))
+                    y2 = 60.0 + 5.0*Math.sin(2.0*Math.PI*(i+heartRateOffset)/(15.0*240.0))
                     // console.log(i,x1,x2)
                 }    
             }
@@ -288,8 +290,6 @@
             context.scale(2,2)
             context.translate(0.5,0.5)
         }
-
-        
 
         function dragScrollBar(){
             var currentX = 0 
@@ -310,6 +310,9 @@
                 currentX = event.clientX
                 if ((scrollbar.offsetLeft - dx + scrollbar.offsetWidth < window.innerWidth - controllerWidth) && (scrollbar.offsetLeft-dx > 0)){
                     scrollbar.style.left = (scrollbar.offsetLeft - dx) + 'px'
+                    // update the heart rate offset 
+                    heartRateOffset = scrollbar.offsetLeft * 20
+                    drawCTG()
                 } 
                 console.log(scrollbar.offsetLeft, scrollbar.offsetWidth)
             }
