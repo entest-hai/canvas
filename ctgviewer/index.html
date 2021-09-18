@@ -1,34 +1,52 @@
 <!-- 18 SEP 2021 -->
 <!-- 1. Dynamic divider -->
 <!-- script should be executed after things loaded -->
+<!-- Do not set canvas size in CSS -->
 
 <html>
     <head>
         <style>
+            .root{
+                margin:0;
+                padding:0
+            }
+            .canvas{
+                background-color:lavenderblush;
+                margin: 0;
+            }
             .title{
                 color:blue;
                 text-align: center;
             }
             .divider{
                 position: absolute;
-                background-color: chartreuse;
+                background-color:lightgray;
                 width: 100%;
                 height: 50px;
                 cursor: row-resize;
             }
         </style>
     </head>
-    <body>
+    <body class="root">
         <div>
-            <h1 class="title">CTG Viewer</h1>
+            <canvas id="canvas" class="canvas"></canvas>
            <div id='divider' class="divider"></div>
         </div>
     </body>
     <script>
-        
+        // set up canvas size and context 
+        canvas = document.getElementById("canvas")
+        canvas.width = window.innerWidth
+        canvas.height = window.innerHeight/2
+        // draw CTG 
+        // drawCTG()
+        // divider drage 
         dragElement(document.getElementById('divider'))
-
+        // functions 
         function dragElement(element){
+            
+            console.log("canvas height", canvas.height, "divider", element.offsetTop)
+
             var currentY = 0
             var dy = 0 
             element.onmousedown = drageMouseDown
@@ -47,12 +65,36 @@
                 dy = currentY - event.clientY
                 currentY = event.clientY
                 element.style.top = (element.offsetTop - dy) + "px"
+                canvas.height = element.offsetTop
+                console.log("canvas height", canvas.height, "divider", element.style.top)
             }
 
             function closeDragElement(){
                 document.onmouseup = null;
                 document.onmousemove = null;
             }
+            
+            function reDrawCTG(){
+                var context = ctgcanvas.getContext('2d')
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height); 
+                context.lineWidth = 1
+                context.beginPath()
+                context.moveTo(0,10)
+                context.lineTo(200,10)
+                context.strokeStyle = 'blue'
+                context.closePath()
+                context.stroke()
+            }
+        }
+
+        function drawCTG(){
+            var context = canvas.getContext('2d')
+            context.lineWidth = 2
+            context.beginPath();
+            context.moveTo(0,10)
+            context.lineTo(1000,10)
+            context.strokeStyle = "black";
+            context.stroke();
         }
     </script>
 </html>
