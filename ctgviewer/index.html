@@ -21,9 +21,12 @@
             .divider{
                 position: absolute;
                 background-color: paleturquoise;
-                width: 1920px;
-                height: 50px;
+                width: 1680px;
+                height: 25px;
                 cursor: row-resize;
+                background-image: url('./resizeimage.bmp');
+                background-repeat: no-repeat;
+                background-position: center center;
             }
         </style>
     </head>
@@ -34,8 +37,9 @@
         </div>
     </body>
     <script>
+        // 1920x1080, 1680, 
         // 
-        canvasWidth = 1920
+        canvasWidth = 1680
         canvasHeight = 1080/2  
         // set up canvas size and context 
         canvas = document.getElementById("canvas")
@@ -81,7 +85,7 @@
         }
 
         function drawCTG(){
-            console.log("canvas height", canvas.height, "cavans width", canvas.width)
+            console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
             // boxSize 
             var boxSize = canvas.height/2/22
             // 
