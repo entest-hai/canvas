@@ -177,7 +177,7 @@
                 dy = currentY - event.clientY
                 currentY = event.clientY
                 element.style.top = (element.offsetTop - dy) + "px"
-                setupCanvas(canvasWidth,element.offsetTop)
+                setupCanvas(canvasWidth,element.offsetTop - 40)
                 drawCTG()
                 console.log("canvas height", canvas.height, "divider", element.style.top)
                 
