@@ -244,7 +244,7 @@
             var y2 = 150.0; 
             context.lineWidth = 2
             context.strokeStyle = "red"
-            for (var i = 0; i < 1680*6*2; i++){
+            for (var i = 0; i < 700*240; i++){
                     context.beginPath()
                     context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                     context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
@@ -253,7 +253,7 @@
                     x1 = x2
                     y1 = y2 
                     x2 = xOffset + i*boxSize/(2.0*120.0)
-                    y2 = 150.0 + 30.0*Math.sin(2.0*Math.PI*i/(10.0*240.0))
+                    y2 = 150.0 + 15.0*Math.sin(2.0*Math.PI*i/(10.0*240.0))
                     // console.log(i,x1,x2)
                 }
             // plot maternal heart rate 
@@ -263,7 +263,7 @@
             var y2 = 60.0; 
             context.lineWidth = 2
             context.strokeStyle = "blue"
-            for (var i = 0; i < 1680*6*2; i++){
+            for (var i = 0; i < 700*240; i++){
                     context.beginPath()
                     context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                     context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
