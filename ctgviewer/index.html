@@ -13,7 +13,7 @@
                 position: absolute;
                 background-color: chartreuse;
                 width: 100%;
-                height: 20px;
+                height: 50px;
                 cursor: row-resize;
             }
         </style>
@@ -25,33 +25,34 @@
         </div>
     </body>
     <script>
-        var isDragging = false
-        function resize(){
-            console.log("resize the canvas")
+        
+        dragElement(document.getElementById('divider'))
+
+        function dragElement(element){
+            var currentY = 0
+            var dy = 0 
+            element.onmousedown = drageMouseDown
+
+            function drageMouseDown(event){
+                event = event || window.event;
+                event.preventDefault()
+                currentY = event.clientY
+                document.onmouseup = closeDragElement
+                document.onmousemove = elementDrag
+            }
+
+            function elementDrag(event){
+                event = event || window.event
+                event.preventDefault()
+                dy = currentY - event.clientY
+                currentY = event.clientY
+                element.style.top = (element.offsetTop - dy) + "px"
+            }
+
+            function closeDragElement(){
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
         }
-        document.getElementById('divider').addEventListener("mousedown",function(event){
-            isDragging = true
-            event.preventDefault()
-            currentX = event.clientX
-            currentY = event.clientY
-            console.log('drag divider',isDragging,currentX,currentY)
-        })
-        document.getElementById('divider').addEventListener("mouseup",function(event){
-            isDragging = false
-            console.log("drag divider", isDragging)
-        })
-        document.getElementById('divider').addEventListener("mousemove",function(event){
-           if(isDragging){
-            event.preventDefault()
-            dx = currentX - event.clientX
-            dy = currentY - event.clientY
-            currentX = event.clientX
-            currentY = event.clientY
-            divider =  document.getElementById("divider")
-            divider.style.top = (divider.offsetTop - dy) + "px"
-            console.log("move divider",currentY)         
-           }
-        })
-        resize()
     </script>
 </html>
