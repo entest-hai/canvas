@@ -197,6 +197,8 @@
         }
 
         function drawCTG(){
+            // number of heart rate 240 values per minute 4Hz 
+            const numHeartRate = 60*240
             console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
             // boxSize 
             var boxSize = canvas.height/2/22
@@ -244,7 +246,7 @@
             var y2 = 150.0; 
             context.lineWidth = 2
             context.strokeStyle = "red"
-            for (var i = 0; i < 700*240; i++){
+            for (var i = 0; i < numHeartRate; i++){
                     context.beginPath()
                     context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                     context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
@@ -263,7 +265,7 @@
             var y2 = 60.0; 
             context.lineWidth = 2
             context.strokeStyle = "blue"
-            for (var i = 0; i < 700*240; i++){
+            for (var i = 0; i < numHeartRate; i++){
                     context.beginPath()
                     context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                     context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
