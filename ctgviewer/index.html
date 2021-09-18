@@ -2,6 +2,7 @@
 <!-- 1. Dynamic divider -->
 <!-- script should be executed after things loaded -->
 <!-- Do not set canvas size in CSS -->
+<!-- 1 minute = 240 heart rate = 2*boxSize = 40 pixel, so 6 haert rate per pixel -->
 
 <html>
     <head>
@@ -229,6 +230,52 @@
             }
             // draw ua horizontal line 
             // draw ua vertial line 
+            // draw heart rate 
+            plotHeartRate()
+            // draw ua 
+
+            function plotHeartRate(){
+            console.log("canvas height", canvas.height)
+            const stepX = boxSize/120.0
+            // plot fetal heart rate 
+            var x1 = xOffset; 
+            var y1 = 150.0; 
+            var x2 = xOffset; 
+            var y2 = 150.0; 
+            context.lineWidth = 2
+            context.strokeStyle = "red"
+            for (var i = 0; i < 1680*6*2; i++){
+                    context.beginPath()
+                    context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
+                    context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
+                    context.stroke()
+                    // update x and y 
+                    x1 = x2
+                    y1 = y2 
+                    x2 = xOffset + i*boxSize/(2.0*120.0)
+                    y2 = 150.0 + 30.0*Math.sin(2.0*Math.PI*i/(10.0*240.0))
+                    // console.log(i,x1,x2)
+                }
+            // plot maternal heart rate 
+            var x1 = xOffset; 
+            var y1 = 60.0; 
+            var x2 = xOffset; 
+            var y2 = 60.0; 
+            context.lineWidth = 2
+            context.strokeStyle = "blue"
+            for (var i = 0; i < 1680*6*2; i++){
+                    context.beginPath()
+                    context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
+                    context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
+                    context.stroke()
+                    // update x and y 
+                    x1 = x2
+                    y1 = y2 
+                    x2 = xOffset + i*boxSize/(2.0*120.0)
+                    y2 = 60.0 + 5.0*Math.sin(2.0*Math.PI*i/(15.0*240.0))
+                    // console.log(i,x1,x2)
+                }    
+            }
         }
 
         function setupCanvas(canvasWidth,canvasHeight){
@@ -239,6 +286,8 @@
             context.scale(2,2)
             context.translate(0.5,0.5)
         }
+
+        
 
         function dragScrollBar(){
             var currentX = 0 
