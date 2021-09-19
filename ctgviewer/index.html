@@ -226,6 +226,8 @@
             // console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth,"heartrateoffset",scrollbar.offsetLeft)
             // boxSize divided by 2 to convert back to pixel in style.width and clientX and clientY and window.innerWidth
             var boxSize = (canvas.height - 2*20)/2/22
+            // number of heart rate per box size 
+            var numHeartRatePerBox = 240
             // 
             const xOffset = 50;
             const yOffset = 10;
@@ -237,7 +239,7 @@
             // number of vertical line each 0.5 minute depends on heart rate length or take all screen width
             const numVerticalLine = canvas.width/2/boxSize;
             // number of heart rate per screen each box is half minute 120 heart rate values 
-            const numHeartRatePerScreen = (numVerticalLine)*120 
+            const numHeartRatePerScreen = (numVerticalLine)*numHeartRatePerBox 
             // adjust scrollbar width 
             scrollbar.style.width = ((((window.innerWidth - controllerWidth)/window.innerWidth)*numHeartRatePerScreen)/numHeartRate*100.0) + '%'
             // clear before draw or redraw
@@ -282,7 +284,7 @@
 
             function plotMaternalHeartRate(){
                 // plot maternal heart rate 
-                const stepX = boxSize/120.0
+                const stepX = boxSize/numHeartRatePerBox
                 var x1 = xOffset; 
                 var y1 = mHR[0]; 
                 var x2 = xOffset; 
@@ -305,7 +307,7 @@
             }
 
             function plotFetalHeartRate(){
-                const stepX = boxSize/120.0
+                const stepX = boxSize/numHeartRatePerBox
                 var x1 = xOffset; 
                 var y1 = fHR[0]; 
                 var x2 = xOffset; 
@@ -332,20 +334,21 @@
             }
 
             function drawTimeMark(){
-                //
+                //number of box per ten minute 
+                var numBoxPerTenMinute = (240*10)/numHeartRatePerBox
                 var numMinute = numHeartRate/240 
                 // draw ten minute mark bar 
                 if (isAccMarkShown){
                     context.fillStyle = "rgba(50, 50, 168, 0.2)";
                     for (var i = 0; i < numMinute/10; i++){
-                        context.fillRect(xOffset + 20*boxSize*i, yOffset, boxSize, numHorizontalLine*boxSize);
+                        context.fillRect(xOffset + numBoxPerTenMinute*boxSize*i, yOffset, boxSize, numHorizontalLine*boxSize);
                     }
                 }
                 // draw time mark x axis 
                 context.font = "15px Arial";
                 context.fillStyle = "red";
                 for (var i = 0; i < numMinute/10+1; i++){
-                    context.fillText((i*10 + parseInt(heartRateOffset/240)).toString(), xOffset+20*boxSize*i, 20+yOffset+numHorizontalLine*boxSize);
+                    context.fillText((i*10 + parseInt(heartRateOffset/240)).toString(), xOffset+numBoxPerTenMinute*boxSize*i, 20+yOffset+numHorizontalLine*boxSize);
                 }
                 // mark 10bpm stick spacing
                 context.font = "15px Arial";
