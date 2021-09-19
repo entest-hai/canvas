@@ -199,9 +199,13 @@
         }
 
         function drawCTG(){
+            //
             // number of heart rate 240 values per minute 4Hz 
-            const numHeartRate = 120*240
+            const numHeartRate = 700*240
+            //
+            var heartRateOffset =  parseInt(scrollbar.offsetLeft * numHeartRate/(window.innerWidth - controllerWidth))
             console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
+            // console.log("heartrate offset", offsetStep)
             // boxSize 
             var boxSize = canvas.height/2/22
             // 
@@ -320,7 +324,7 @@
                 if ((scrollbar.offsetLeft - dx + scrollbar.offsetWidth < window.innerWidth - controllerWidth) && (scrollbar.offsetLeft-dx > 0)){
                     scrollbar.style.left = (scrollbar.offsetLeft - dx) + 'px'
                     // update the heart rate offset 
-                    heartRateOffset = scrollbar.offsetLeft * 20
+                    // heartRateOffset = scrollbar.offsetLeft * offsetStep
                     drawCTG()
                 } 
                 console.log(scrollbar.offsetLeft, scrollbar.offsetWidth)
