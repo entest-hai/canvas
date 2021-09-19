@@ -151,7 +151,7 @@
         var mHR = []
         var fHR = []
         // load heart rate from json file 
-        loadHeartRate("./data/KKH048.json")
+        loadHeartRate("./data/STG091.json")
         // heart rate offset when scrollbar moving 
         var heartRateOffset = 0 
         // 1920x1080, 1680, 
@@ -259,13 +259,13 @@
                 // plot maternal heart rate 
                 const stepX = boxSize/120.0
                 var x1 = xOffset; 
-                var y1 = 60.0; 
+                var y1 = mHR[0]; 
                 var x2 = xOffset; 
-                var y2 = 60.0; 
+                var y2 = mHR[1]; 
                 context.lineWidth = 2
                 context.strokeStyle = "blue"
                 var numAvailalbeHeartRate = (numHeartRate-heartRateOffset) > numHeartRatePerScreen ? numHeartRatePerScreen : (numHeartRate-heartRateOffset)
-                for (var i = 0; i < numAvailalbeHeartRate; i++){
+                for (var i = 2; i < numAvailalbeHeartRate; i++){
                         context.beginPath()
                         context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                         context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
@@ -282,14 +282,14 @@
             function plotFetalHeartRate(){
                 const stepX = boxSize/120.0
                 var x1 = xOffset; 
-                var y1 = 150.0; 
+                var y1 = fHR[0]; 
                 var x2 = xOffset; 
-                var y2 = 150.0; 
+                var y2 = fHR[1]; 
                 context.lineWidth = 2
                 context.strokeStyle = "red"
                 // check data available 
                 var numAvailalbeHeartRate = (numHeartRate-heartRateOffset) > numHeartRatePerScreen ? numHeartRatePerScreen : (numHeartRate-heartRateOffset)
-                for (var i = 0; i < numAvailalbeHeartRate; i++){
+                for (var i = 2; i < numAvailalbeHeartRate; i++){
                         context.beginPath()
                         context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                         context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
