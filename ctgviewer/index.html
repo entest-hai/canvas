@@ -157,6 +157,10 @@
         // 1920x1080, 1680, 
         canvasWidth = 1680
         canvasHeight = 1080/2  
+        canvasWidth = window.innerWidth
+        canvasHeight = window.innerHeight/2
+        //
+
         // controllers width 330px 
         const controllerWidth = 330
         // set up canvas size and context 
@@ -337,6 +341,9 @@
             canvas.style.height = `${canvasHeight}px`
             context.scale(2,2)
             context.translate(0.5,0.5)
+            //
+            divider = document.getElementById('divider')
+            divider.style.width = window.innerWidth
         }
 
 
