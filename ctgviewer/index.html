@@ -219,6 +219,14 @@
         }
 
         function drawCTG(){
+            // min fetal heart rate 
+            const minFHR = 30 
+            // max fetal heart rate 
+            const maxFHR = 240 
+            // min maternal heart rate 
+            const minMHR = 30 
+            // max maternal heart rate 
+            const maxMHR = 180 
             // number of heart rate 240 values per minute 4Hz 
             const numHeartRate = mHR.length
             // calcluate heart rate offset when scroll bar moved 
@@ -289,14 +297,16 @@
                 var y1 = mHR[0]; 
                 var x2 = xOffset; 
                 var y2 = mHR[1]; 
-                context.lineWidth = 1.5
+                context.lineWidth = 1
                 context.strokeStyle = "blue"
                 var numAvailalbeHeartRate = (numHeartRate-heartRateOffset) > numHeartRatePerScreen ? numHeartRatePerScreen : (numHeartRate-heartRateOffset)
                 for (var i = 2; i < numAvailalbeHeartRate; i++){
                         context.beginPath()
                         context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                         context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
-                        context.stroke()
+                        if (y1<maxMHR && y1>minMHR && y2<maxMHR && y2>minMHR){
+                            context.stroke()
+                        }
                         // update x and y 
                         x1 = x2
                         y1 = y2 
@@ -312,7 +322,7 @@
                 var y1 = fHR[0]; 
                 var x2 = xOffset; 
                 var y2 = fHR[1]; 
-                context.lineWidth = 1.5
+                context.lineWidth = 1
                 context.strokeStyle = "red"
                 // check data available 
                 var numAvailalbeHeartRate = (numHeartRate-heartRateOffset) > numHeartRatePerScreen ? numHeartRatePerScreen : (numHeartRate-heartRateOffset)
@@ -320,7 +330,9 @@
                         context.beginPath()
                         context.moveTo(x1,(240.0-y1)*(canvas.height/(2.0*240.0)))
                         context.lineTo(x2,(240.0-y2)*(canvas.height/(2.0*240.0)))
-                        context.stroke()
+                        if (y1<maxFHR && y1>minFHR && y2<maxFHR && y2>minFHR){
+                            context.stroke()
+                        }
                         // update x and y 
                         x1 = x2
                         y1 = y2 
