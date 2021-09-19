@@ -215,7 +215,7 @@
             const numHeartRate = mHR.length
             // calcluate heart rate offset when scroll bar moved 
             var heartRateOffset =  parseInt(scrollbar.offsetLeft * numHeartRate/(window.innerWidth - controllerWidth))
-            // console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
+            // console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth,"heartrateoffset",scrollbar.offsetLeft)
             // boxSize divided by 2 to convert back to pixel in style.width and clientX and clientY and window.innerWidth
             var boxSize = (canvas.height - 2*20)/2/22
             // 
@@ -377,12 +377,12 @@
             function elementDrag(event){
                 dx = currentX - event.clientX
                 currentX = event.clientX
-                if ((scrollbar.offsetLeft - dx + scrollbar.offsetWidth < window.innerWidth - controllerWidth) && (scrollbar.offsetLeft-dx > 0)){
+                if ((scrollbar.offsetLeft - dx + scrollbar.offsetWidth < window.innerWidth - controllerWidth) && (scrollbar.offsetLeft-dx >= 0)){
                     scrollbar.style.left = (scrollbar.offsetLeft - dx) + 'px'
                     // rea draw CTG and heart rate  
                     drawCTG()
                 } 
-                // console.log(scrollbar.offsetLeft, scrollbar.offsetWidth)
+                // console.log("scrollbarOffsetLeft",scrollbar.offsetLeft,"scrollbarWidth",scrollbar.offsetWidth)
             }
 
             function closeDragElement(event){
