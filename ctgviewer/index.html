@@ -3,6 +3,7 @@
 <!-- script should be executed after things loaded -->
 <!-- Do not set canvas size in CSS -->
 <!-- 1 minute = 240 heart rate = 2*boxSize = 40 pixel, so 6 haert rate per pixel -->
+<!-- canvas.height and canvas.width doubled pixcel for retinal screen, window.innerWidth not doubled -->
 
 <html>
     <head>
@@ -199,17 +200,15 @@
         }
 
         function drawCTG(){
-            //
             // number of heart rate 240 values per minute 4Hz 
             const numHeartRate = 120*240
-            //
+            // calcluate heart rate offset when scroll bar moved 
             var heartRateOffset =  parseInt(scrollbar.offsetLeft * numHeartRate/(window.innerWidth - controllerWidth))
             console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
-            // console.log("heartrate offset", offsetStep)
-            // boxSize 
-            var boxSize = canvas.height/2/22
+            // boxSize divided by 2 to convert back to pixel in style.width and clientX and clientY and window.innerWidth
+            var boxSize = (canvas.height - 2*20)/2/22
             // 
-            const xOffset = 10;
+            const xOffset = 50;
             const yOffset = 10;
             const heartRateMin = 30;
             const heartRateMax = 240;
@@ -246,8 +245,9 @@
             plotMaternalHeartRate()
             // draw fetal heart rate 
             plotFetalHeartRate()
+            // plot time mark each ten minute 
+            drawTimeMark()
             // draw ua 
-
             function plotMaternalHeartRate(){
                 // plot maternal heart rate 
                 const stepX = boxSize/120.0
@@ -294,6 +294,31 @@
                         y2 = 150.0 + 15.0*Math.sin(2.0*Math.PI*(i+heartRateOffset)/(5.0*240.0))
                         // console.log(i,x1,x2)
                     }
+            }
+
+            function drawACC(){
+
+            }
+
+            function drawTimeMark(){
+                // draw ten minute mark bar 
+                context.fillStyle = "rgba(50, 50, 168, 0.2)";
+                for (var i = 0; i < 120/10; i++){
+                    context.fillRect(xOffset+20*boxSize*i, yOffset, boxSize, numHorizontalLine*boxSize);
+                }
+                // draw time mark x axis 
+                context.font = "15px Arial";
+                context.fillStyle = "red";
+                for (var i = 0; i < 120/10+1; i++){
+                    context.fillText((i*10).toString(), xOffset+5+20*boxSize*i, 20+yOffset+numHorizontalLine*boxSize);
+                }
+                // mark 10bpm stick spacing
+                context.font = "15px Arial";
+                context.fillStyle = "red";
+                for(var i = 0; i < 5; i++){
+                    context.fillText((30 + i*50).toString(), xOffset-30, yOffset+numHorizontalLine*boxSize-i*5*boxSize);
+                    context.stroke();
+                }
             }
         }
 
