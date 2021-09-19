@@ -134,7 +134,7 @@
                         <img src="images/morpho.png" style="height: 20px;"></img>
                     </button>
                 </div>
-                <fhr-viewer-scrollbar>
+                <fhr-viewer-scrollbar id="dragger">
                     <div id="scrollbar" class="scrollbarDragger" style="width: 22.2624%;">
                         <div class="scrollbarDraggerBar">
                         </div>
@@ -167,6 +167,8 @@
         setupCanvas(canvasWidth,canvasHeight)
         // get scrollbar 
         var scrollbar = document.getElementById('scrollbar')
+        var dragger = document.getElementById('dragger')
+        dragger.onmousedown = mouseClickSrollBar
         // 
         dragScrollBar()
         // draw CTG 
@@ -359,7 +361,17 @@
             context.scale(2,2)
             context.translate(0.5,0.5)
         }
-
+        
+        function mouseClickSrollBar(event){
+            if (event.clientX > controllerWidth + scrollbar.offsetWidth + scrollbar.offsetLeft){
+                scrollbar.style.left = event.clientX - controllerWidth - scrollbar.offsetWidth
+                drawCTG()
+            }
+            if (event.clientX < scrollbar.offsetLeft + controllerWidth){
+                scrollbar.style.left = event.clientX - controllerWidth
+                drawCTG()
+            }
+        }
 
         function dragScrollBar(){
             var currentX = 0 

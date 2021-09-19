@@ -10,7 +10,7 @@
                 position:relative;
                 height:40px;
             }
-            .fhr-viewer-scrollbar {
+            fhr-viewer-scrollbar {
             position:absolute;
             right:0;
             top:9px;
@@ -66,28 +66,28 @@
     <body class="root">
         <div>
             <div class="controllers">
-                <div class="fhr-viewer-scrollbar">
+                <fhr-viewer-scrollbar id="123">
                     <div id="scrollbar" class="scrollbarDragger" style="width: 20%;">
                         <div class="scrollbarDraggerBar"></div>
                     </div>
                 </div>
-            </div>
+            </fhr-viewer-scrollbar>
             <div id='divider' class="divider"></div>
         </div>
     </body>
     <script>
         var scrollbar = document.getElementById('scrollbar')
+        var dragger = document.getElementById('123')
         drag()
-        
         function drag(){
             var currentX = 0 
             var dx = 0 
             scrollbar.onmousedown = drageMouseDown
-            window.onresize = reportWindowResize
+            dragger.onmousedown = scrollBaMouseClick
 
             function drageMouseDown(event){
                 currentX = event.clientX
-                console.log("current")
+                // console.log("current")
                 event = event || window.event;
                 event.preventDefault()
                 document.onmouseup = closeDragElement
@@ -104,14 +104,23 @@
             }
 
             function closeDragElement(event){
-                console.log("close drag")
+                // console.log("close drag")
                 document.onmouseup = null;
                 document.onmousemove = null;
             }
-        }
 
-        function reportWindowResize(){
-            console.log("window resize", window.innerWidth, window.innerHeight)
+            function scrollBaMouseClick(event){
+                console.log("mouse click", event.clientX, scrollbar.offsetWidth)
+                if (event.clientX+scrollbar.offsetWidth/2 < window.innerWidth){
+                    scrollbar.style.left = (event.clientX - scrollbar.offsetWidth/2) + 'px'
+                } 
+                if (event.clientX+scrollbar.offsetWidth > window.innerWidth){
+                    scrollbar.style.left = window.innerWidth - scrollbar.offsetWidth + 'px'
+                }
+                if (event.clientX - scrollbar.offsetWidth/2 <0 ){
+                    scrollbar.style.left = '0px'
+                }
+            }
         }
     </script>
 </html>
