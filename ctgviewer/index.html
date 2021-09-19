@@ -130,7 +130,7 @@
                     <button type="button" class="btn btn-default btn-fhr-icons">
                         <img src="images/print.png" style="height: 20px;"></img>
                     </button>
-                    <button type="button" class="btn btn-default btn-fhr-icons">
+                    <button type="button" class="btn btn-default btn-fhr-icons" onclick="toggleAccMark()">
                         <img src="images/morpho.png" style="height: 20px;"></img>
                     </button>
                 </div>
@@ -159,6 +159,8 @@
         canvasHeight = window.innerHeight/2
         // controllers width 330px 
         const controllerWidth = 330
+        // enable acc mark 
+        var isAccMarkShown = true
         // set up canvas size and context 
         canvas = document.getElementById("canvas")
         // get canvas context 
@@ -333,9 +335,11 @@
                 //
                 var numMinute = numHeartRate/240 
                 // draw ten minute mark bar 
-                context.fillStyle = "rgba(50, 50, 168, 0.2)";
-                for (var i = 0; i < numMinute/10; i++){
-                    context.fillRect(xOffset + 20*boxSize*i, yOffset, boxSize, numHorizontalLine*boxSize);
+                if (isAccMarkShown){
+                    context.fillStyle = "rgba(50, 50, 168, 0.2)";
+                    for (var i = 0; i < numMinute/10; i++){
+                        context.fillRect(xOffset + 20*boxSize*i, yOffset, boxSize, numHorizontalLine*boxSize);
+                    }
                 }
                 // draw time mark x axis 
                 context.font = "15px Arial";
@@ -427,6 +431,12 @@
                     // console.log("simulate haert rate", mHR.length)
                 }
             }
+        }
+
+        function toggleAccMark(){
+            console.log("toggle acc mark")
+            isAccMarkShown = !isAccMarkShown
+            drawCTG()
         }
     </script>
 </html>
