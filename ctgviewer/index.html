@@ -201,7 +201,7 @@
         function drawCTG(){
             //
             // number of heart rate 240 values per minute 4Hz 
-            const numHeartRate = 700*240
+            const numHeartRate = 120*240
             //
             var heartRateOffset =  parseInt(scrollbar.offsetLeft * numHeartRate/(window.innerWidth - controllerWidth))
             console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
@@ -220,8 +220,10 @@
             const numVerticalLine = canvas.width/2/boxSize;
             // number of heart rate per screen each box is half minute 120 heart rate values 
             const numHeartRatePerScreen = (numVerticalLine)*120 
+            // adjust scrollbar width 
+            scrollbar.style.width = ((((window.innerWidth - controllerWidth)/window.innerWidth)*numHeartRatePerScreen)/numHeartRate*100.0) + '%'
             // clear before draw or redraw
-            context.clearRect(0,0,canvas.width,canvas.height    );
+            context.clearRect(0,0,canvas.width,canvas.height);
             // draw heart rate horizontal line step 30bpm 
             context.lineWidth = 0.85
             context.strokeStyle = "black"
@@ -304,6 +306,7 @@
             context.translate(0.5,0.5)
         }
 
+
         function dragScrollBar(){
             var currentX = 0 
             var dx = 0 
@@ -323,8 +326,7 @@
                 currentX = event.clientX
                 if ((scrollbar.offsetLeft - dx + scrollbar.offsetWidth < window.innerWidth - controllerWidth) && (scrollbar.offsetLeft-dx > 0)){
                     scrollbar.style.left = (scrollbar.offsetLeft - dx) + 'px'
-                    // update the heart rate offset 
-                    // heartRateOffset = scrollbar.offsetLeft * offsetStep
+                    // rea draw CTG and heart rate  
                     drawCTG()
                 } 
                 console.log(scrollbar.offsetLeft, scrollbar.offsetWidth)
