@@ -10,8 +10,9 @@
             var uA = []
             loadHeartRate()
             function loadHeartRate(){
-                console.log("load data from json file")
-                fetch("./data/data.json")
+                var pos = Math.ceil(555/120.0) - 555.0/120.0
+                console.log("load data from json file", pos)
+                fetch("./data/STG091.json")
                 .then(response => response.json())
                 .then(
                     json => {

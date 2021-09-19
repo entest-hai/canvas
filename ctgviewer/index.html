@@ -199,7 +199,7 @@
                 element.style.top = (element.offsetTop - dy) + "px"
                 setupCanvas(canvasWidth,element.offsetTop - 40)
                 drawCTG()
-                console.log("canvas height", canvas.height, "divider", element.style.top)
+                // console.log("canvas height", canvas.height, "divider", element.style.top)
                 
             }
 
@@ -215,7 +215,7 @@
             const numHeartRate = mHR.length
             // calcluate heart rate offset when scroll bar moved 
             var heartRateOffset =  parseInt(scrollbar.offsetLeft * numHeartRate/(window.innerWidth - controllerWidth))
-            console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
+            // console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
             // boxSize divided by 2 to convert back to pixel in style.width and clientX and clientY and window.innerWidth
             var boxSize = (canvas.height - 2*20)/2/22
             // 
@@ -234,24 +234,13 @@
             scrollbar.style.width = ((((window.innerWidth - controllerWidth)/window.innerWidth)*numHeartRatePerScreen)/numHeartRate*100.0) + '%'
             // clear before draw or redraw
             context.clearRect(0,0,canvas.width,canvas.height);
-            // draw heart rate horizontal line step 30bpm 
-            context.lineWidth = 0.85
-            context.strokeStyle = "black"
-            for (var i = 0; i < numHorizontalLine+1; i++){
-                context.beginPath();
-                context.moveTo(xOffset,yOffset + i*boxSize)
-                context.lineTo(canvasWidth,yOffset + i*boxSize)
-                context.stroke()
-            }
             // draw heart rate vertical line step 0.5 minute 
-            for (var i = 0; i <numVerticalLine+1; i++){
-                context.beginPath()
-                context.moveTo(xOffset+boxSize*i, yOffset);
-                context.lineTo(xOffset+boxSize*i, yOffset+numHorizontalLine*boxSize);
-                context.stroke()
-            }
             // draw ua horizontal line 
             // draw ua vertial line 
+            // draw vertical lines
+            drawHorizontalLines()
+            // draw vertical lines
+            drawVerticalLines()
             // draw maternal heart rate 
             plotMaternalHeartRate()
             // draw fetal heart rate 
@@ -259,6 +248,30 @@
             // plot time mark each ten minute 
             drawTimeMark()
             // draw ua 
+            function drawHorizontalLines(){
+                // draw heart rate horizontal line step 30bpm 
+                context.lineWidth = 0.85
+                context.strokeStyle = "black"
+                for (var i = 0; i < numHorizontalLine+1; i++){
+                    context.beginPath();
+                    context.moveTo(xOffset,yOffset + i*boxSize)
+                    context.lineTo(canvasWidth,yOffset + i*boxSize)
+                    context.stroke()
+                }
+            }
+
+            function drawVerticalLines(){
+                context.lineWidth = 0.85
+                context.strokeStyle = "black"
+                var pos = (Math.ceil(heartRateOffset/120.0) - (heartRateOffset/120.0))*boxSize
+                for (var i = 0; i <numVerticalLine+1; i++){
+                    context.beginPath()
+                    context.moveTo(xOffset + pos + boxSize*i, yOffset);
+                    context.lineTo(xOffset + pos + boxSize*i, yOffset+numHorizontalLine*boxSize);
+                    context.stroke()
+                }
+            }
+
             function plotMaternalHeartRate(){
                 // plot maternal heart rate 
                 const stepX = boxSize/120.0
@@ -316,7 +329,7 @@
                 // draw ten minute mark bar 
                 context.fillStyle = "rgba(50, 50, 168, 0.2)";
                 for (var i = 0; i < numMinute/10; i++){
-                    context.fillRect(xOffset+20*boxSize*i, yOffset, boxSize, numHorizontalLine*boxSize);
+                    context.fillRect(xOffset + 20*boxSize*i, yOffset, boxSize, numHorizontalLine*boxSize);
                 }
                 // draw time mark x axis 
                 context.font = "15px Arial";
@@ -354,7 +367,7 @@
 
             function drageMouseDown(event){
                 currentX = event.clientX
-                console.log("current", event.clientX, scrollbar.offsetLeft,window.innerWidth)
+                // console.log("current", event.clientX, scrollbar.offsetLeft,window.innerWidth)
                 event = event || window.event;
                 event.preventDefault()
                 document.onmouseup = closeDragElement
@@ -369,7 +382,7 @@
                     // rea draw CTG and heart rate  
                     drawCTG()
                 } 
-                console.log(scrollbar.offsetLeft, scrollbar.offsetWidth)
+                // console.log(scrollbar.offsetLeft, scrollbar.offsetWidth)
             }
 
             function closeDragElement(event){
@@ -389,7 +402,7 @@
                     json => {
                         mHR = json['mHR']
                         fHR = json['fHR']
-                        console.log("load heart rate from json", mHR.length,mHR)
+                        // console.log("load heart rate from json", mHR.length,mHR)
                         drawCTG()
                     }
                     )
@@ -399,7 +412,7 @@
                 for (var i = 0; i < numSimulatedHeartRate; i++){
                     mHR[i] = 60.0 + 5.0*Math.sin(2.0*Math.PI*(i)/(15.0*240.0))
                     fHR[i] = 150.0 + 15.0*Math.sin(2.0*Math.PI*(i)/(5.0*240.0))
-                    console.log("simulate haert rate", mHR.length)
+                    // console.log("simulate haert rate", mHR.length)
                 }
             }
         }
