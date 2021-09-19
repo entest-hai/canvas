@@ -1,0 +1,26 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>Load Data From Json</h1>
+        <script>
+            var mHR = []
+            var fHR = []
+            var uA = []
+            loadHeartRate()
+            function loadHeartRate(){
+                console.log("load data from json file")
+                fetch("./data/data.json")
+                .then(response => response.json())
+                .then(
+                    json => {
+                        mHR = json['mHR']
+                        fHR = json['fHR']
+                        console.log('mhr length ', mHR.length)
+                    }
+                    )
+            }
+        </script>
+    </body>
+</html>

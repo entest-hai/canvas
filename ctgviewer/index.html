@@ -145,7 +145,14 @@
         </div>
     </body>
     <script>
-        //
+        // number of simulated heart rate 
+        numSimulatedHeartRate = 120*240 
+        // buffer maternal heartrate, fetal heart rate and ua 
+        var mHR = []
+        var fHR = []
+        // load heart rate from json file 
+        loadHeartRate("./data/KKH048.json")
+        // heart rate offset when scrollbar moving 
         var heartRateOffset = 0 
         // 1920x1080, 1680, 
         canvasWidth = 1680
@@ -160,7 +167,7 @@
         setupCanvas(canvasWidth,canvasHeight)
         // get scrollbar 
         var scrollbar = document.getElementById('scrollbar')
-        //
+        // 
         dragScrollBar()
         // draw CTG 
         drawCTG()
@@ -201,7 +208,7 @@
 
         function drawCTG(){
             // number of heart rate 240 values per minute 4Hz 
-            const numHeartRate = 120*240
+            const numHeartRate = mHR.length
             // calcluate heart rate offset when scroll bar moved 
             var heartRateOffset =  parseInt(scrollbar.offsetLeft * numHeartRate/(window.innerWidth - controllerWidth))
             console.log("canvas height", canvas.height, "cavans width", canvas.width,"windowinnerwidth", window.innerWidth)
@@ -267,7 +274,7 @@
                         x1 = x2
                         y1 = y2 
                         x2 = xOffset + i*stepX
-                        y2 = 60.0 + 5.0*Math.sin(2.0*Math.PI*(i+heartRateOffset)/(15.0*240.0))
+                        y2 = mHR[heartRateOffset + i]
                         // console.log(i,x1,x2)
                     }  
             }
@@ -291,8 +298,7 @@
                         x1 = x2
                         y1 = y2 
                         x2 = xOffset + i*stepX
-                        y2 = 150.0 + 15.0*Math.sin(2.0*Math.PI*(i+heartRateOffset)/(5.0*240.0))
-                        // console.log(i,x1,x2)
+                        y2 = fHR[heartRateOffset + i]
                     }
             }
 
@@ -312,7 +318,7 @@
                 context.font = "15px Arial";
                 context.fillStyle = "red";
                 for (var i = 0; i < numMinute/10+1; i++){
-                    context.fillText((i*10).toString(), xOffset+20*boxSize*i, 20+yOffset+numHorizontalLine*boxSize);
+                    context.fillText((i*10 + parseInt(heartRateOffset/240)).toString(), xOffset+20*boxSize*i, 20+yOffset+numHorizontalLine*boxSize);
                 }
                 // mark 10bpm stick spacing
                 context.font = "15px Arial";
@@ -363,6 +369,31 @@
                 console.log("close drag")
                 document.onmouseup = null;
                 document.onmousemove = null;
+            }
+        }
+
+        function loadHeartRate(file){
+    
+            // load heart rate from file 
+            if(file){
+                fetch(file)
+                .then(response => response.json())
+                .then(
+                    json => {
+                        mHR = json['mHR']
+                        fHR = json['fHR']
+                        console.log("load heart rate from json", mHR.length,mHR)
+                        drawCTG()
+                    }
+                    )
+            }
+            // simulate heart rate as sine wave
+            else {
+                for (var i = 0; i < numSimulatedHeartRate; i++){
+                    mHR[i] = 60.0 + 5.0*Math.sin(2.0*Math.PI*(i)/(15.0*240.0))
+                    fHR[i] = 150.0 + 15.0*Math.sin(2.0*Math.PI*(i)/(5.0*240.0))
+                    console.log("simulate haert rate", mHR.length)
+                }
             }
         }
 
