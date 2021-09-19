@@ -301,16 +301,18 @@
             }
 
             function drawTimeMark(){
+                //
+                var numMinute = numHeartRate/240 
                 // draw ten minute mark bar 
                 context.fillStyle = "rgba(50, 50, 168, 0.2)";
-                for (var i = 0; i < 120/10; i++){
+                for (var i = 0; i < numMinute/10; i++){
                     context.fillRect(xOffset+20*boxSize*i, yOffset, boxSize, numHorizontalLine*boxSize);
                 }
                 // draw time mark x axis 
                 context.font = "15px Arial";
                 context.fillStyle = "red";
-                for (var i = 0; i < 120/10+1; i++){
-                    context.fillText((i*10).toString(), xOffset+5+20*boxSize*i, 20+yOffset+numHorizontalLine*boxSize);
+                for (var i = 0; i < numMinute/10+1; i++){
+                    context.fillText((i*10).toString(), xOffset+20*boxSize*i, 20+yOffset+numHorizontalLine*boxSize);
                 }
                 // mark 10bpm stick spacing
                 context.font = "15px Arial";
