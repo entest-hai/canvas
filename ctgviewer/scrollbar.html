@@ -1,6 +1,15 @@
 <html>
     <head>
         <style>
+            .root{
+                margin:0;
+                padding:0
+            }
+            .controllers {
+                margin-bottom:8px;
+                position:relative;
+                height:40px;
+            }
             .fhr-viewer-scrollbar {
             position:absolute;
             right:0;
@@ -42,22 +51,39 @@
             cursor: pointer;
             z-index:1
         }
+        .divider{
+                position: absolute;
+                background-color: paleturquoise;
+                width: 100%;
+                height: 25px;
+                cursor: row-resize;
+                background-image: url('./images/resizeimage.bmp');
+                background-repeat: no-repeat;
+                background-position: center center;
+            }
         </style>
     </head>
-    <body>
-        <div class="fhr-viewer-scrollbar">
-            <div id="scrollbar" class="scrollbarDragger" style="width: 20%;">
-                <div class="scrollbarDraggerBar"></div>
+    <body class="root">
+        <div>
+            <div class="controllers">
+                <div class="fhr-viewer-scrollbar">
+                    <div id="scrollbar" class="scrollbarDragger" style="width: 20%;">
+                        <div class="scrollbarDraggerBar"></div>
+                    </div>
+                </div>
             </div>
+            <div id='divider' class="divider"></div>
         </div>
     </body>
     <script>
         var scrollbar = document.getElementById('scrollbar')
         drag()
+        
         function drag(){
             var currentX = 0 
             var dx = 0 
             scrollbar.onmousedown = drageMouseDown
+            window.onresize = reportWindowResize
 
             function drageMouseDown(event){
                 currentX = event.clientX
@@ -82,6 +108,10 @@
                 document.onmouseup = null;
                 document.onmousemove = null;
             }
+        }
+
+        function reportWindowResize(){
+            console.log("window resize", window.innerWidth, window.innerHeight)
         }
     </script>
 </html>

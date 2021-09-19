@@ -101,7 +101,7 @@
             .divider{
                 position: absolute;
                 background-color: paleturquoise;
-                width: 1680px;
+                width: 100%;
                 height: 25px;
                 cursor: row-resize;
                 background-image: url('./images/resizeimage.bmp');
@@ -155,12 +155,8 @@
         // heart rate offset when scrollbar moving 
         var heartRateOffset = 0 
         // 1920x1080, 1680, 
-        canvasWidth = 1680
-        canvasHeight = 1080/2  
         canvasWidth = window.innerWidth
         canvasHeight = window.innerHeight/2
-        //
-
         // controllers width 330px 
         const controllerWidth = 330
         // set up canvas size and context 
@@ -177,6 +173,14 @@
         drawCTG()
         // divider drage 
         dragElement(document.getElementById('divider'))
+        // window resize 
+        window.addEventListener('resize', function(eveent){
+            console.log('window resize and redraw ctg')
+            canvasWidth = window.innerWidth
+            canvasHeight = window.innerHeight/2
+            setupCanvas(canvasWidth,canvasHeight)
+            drawCTG()
+        })
         // functions 
         function dragElement(element){
             var currentY = 0
@@ -354,9 +358,6 @@
             canvas.style.height = `${canvasHeight}px`
             context.scale(2,2)
             context.translate(0.5,0.5)
-            //
-            divider = document.getElementById('divider')
-            divider.style.width = window.innerWidth
         }
 
 
@@ -393,7 +394,6 @@
         }
 
         function loadHeartRate(file){
-    
             // load heart rate from file 
             if(file){
                 fetch(file)
@@ -416,6 +416,5 @@
                 }
             }
         }
-
     </script>
 </html>
