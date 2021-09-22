@@ -1,0 +1,16 @@
+<html>
+    <head>
+    </head>
+    <body>
+       <audio controls id="player">
+           <source src="california.mp3"></source>
+       </audio>
+    </body>
+    <script>
+        const audio = document.getElementById("player")
+        setTimeout(function(){
+            audio.muted = false
+            audio.play()
+        },1000)
+    </script>
+</html>
