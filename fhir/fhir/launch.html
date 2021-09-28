@@ -1,0 +1,24 @@
+<!-- launch.html -->
+<!-- nonProductClientID: 94410a76-e36d-4e03-ad50-8a2f6e295217 -->
+<!-- clientID: d61c55c5-0ac3-4178-b852-ce8c469c7340 -->
+<!-- https://main.d25ixo3i27kpqh.amplifyapp.com/ -->
+<!-- username: fhircamila -->
+<!-- pass: epicepic1 -->
+<!-- https://epic.patientdev.repl.co/app.html -->
+
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h1>Launch page FHIR</h1>
+    </body>
+    <script src="fhir-client.js"></script>
+    <script>
+        FHIR.oauth2.authorize({
+            "client_id": "6eeb1b28-47d2-4674-8c98-9746c0e0ae7d",
+            'scope':  'PATIENT.READ, PATIENT.SEARCH',
+            'redirect_uri': 'https://epic.patientdev.repl.co/app.html'
+        });
+    </script>
+</html>
