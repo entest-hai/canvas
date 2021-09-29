@@ -8,13 +8,74 @@
 <html>
     <head>
         <script src="./fhir-client.js"></script>
+        <style>
+            #patient, #meds {
+                font-family: Monaco, monospace;
+                white-space: pre;
+                font-size: 13px;
+                height: 30vh;
+                overflow: scroll;
+                border: 1px solid #CCC;
+            }
+        </style>
     </head>
     <body>
-        <h1>SMART FHIR</h1>
+       <div>
+            <h4>Current Patient</h4>
+           <div id="patient">Loading...</div>
+           <br/>
+           <h4>Medications</h4>
+           <div id="meds">Loading...</div>
+       </div>
+        
     </body>
     <script>
         // 1. test open FHIR server 
-        var client = FHIR.client("https://r3.smarthealthit.org")
-        client.request("Patient").then(console.log).catch(console.error)
+        // var client = FHIR.client("https://r3.smarthealthit.org")
+        // client.request("Patient").then(console.log).catch(console.error)
+        
+        // 2. display current patient
+        client2 = FHIR.client({
+            serverUrl: "https://r3.smarthealthit.org",
+            tokenResponse: {
+            patient: "2e27c71e-30c8-4ceb-8c1c-5641e066c0a4"
+        }});
+        console.log(client2)
+        // client2.request(`Patient/${client2.patient.id}`);
+
+        // 3. 
+        client2.patient.read().then(
+                    function(pt) {
+                        document.getElementById("patient").innerText = JSON.stringify(pt, null, 4);
+                    },
+                    function(error) {
+                        console.log(error.stack)
+                    }
+                );
+        // 4. 
+        // Get MedicationRequests for the selected patient
+        client2.request("/MedicationRequest?patient=" + client2.patient.id, {
+                    resolveReferences: [ "medicationReference" ],
+                    graph: true
+                })
+                
+                // Reject if no MedicationRequests are found
+                .then(function(data) {
+                    if (!data.entry || !data.entry.length) {
+                        throw new Error("No medications found for the selected patient");
+                    }
+                    return data.entry;
+                })
+                
+
+                // Render the current patient's medications (or any error)
+                .then(
+                    function(meds) {
+                        document.getElementById("meds").innerText = JSON.stringify(meds, null, 4);
+                    },
+                    function(error) {
+                        document.getElementById("meds").innerText = error.stack;
+                    }
+                );
     </script>
 </html>

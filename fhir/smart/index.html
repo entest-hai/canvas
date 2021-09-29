@@ -1,3 +1,10 @@
+<!-- 29 SEP 2021 TRAN MINH HAI  -->
+<!-- SMART FHIR Client: http://docs.smarthealthit.org/client-js/client -->
+<!-- Observation client.patient.request("Observation"); // -> /Observation?patient=patient-id -->
+<!-- client.request("/MedicationRequest?patient=" + client.patient.id, -->
+<!-- Mediation -->
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -33,6 +40,8 @@
                         document.getElementById("patient").innerText = error.stack;
                     }
                 );
+                //
+                
                 
                 // Get MedicationRequests for the selected patient
                 client.request("/MedicationRequest?patient=" + client.patient.id, {
