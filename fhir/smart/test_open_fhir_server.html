@@ -21,6 +21,11 @@
     </head>
     <body>
        <div>
+           <button 
+            style="background-color: aqua; padding: 20px; font-size: 20px;"
+            id="button" 
+            onclick="fetchThing()"
+            >Click to Fetch Patient Information</button>
             <h4>Current Patient</h4>
            <div id="patient">Loading...</div>
            <br/>
@@ -35,7 +40,8 @@
         // client.request("Patient").then(console.log).catch(console.error)
         
         // 2. display current patient
-        client2 = FHIR.client({
+        function fetchThing(){
+            client2 = FHIR.client({
             serverUrl: "https://r3.smarthealthit.org",
             tokenResponse: {
             patient: "2e27c71e-30c8-4ceb-8c1c-5641e066c0a4"
@@ -77,5 +83,7 @@
                         document.getElementById("meds").innerText = error.stack;
                     }
                 );
+        }
+       
     </script>
 </html>
