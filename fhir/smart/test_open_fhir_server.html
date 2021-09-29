@@ -1,0 +1,20 @@
+<!-- 29 SEP 2021 TRAN MINH HAI -->
+<!-- SMART FHIR APP EXAMPLE:https://docs.smarthealthit.org/tutorials/javascript/-->
+<!-- 1. Test open FHIR server -->
+<!-- const client = FHIR.client("https://r3.smarthealthit.org"); -->
+<!-- client.request("Patient").then(console.log).catch(console.error); -->
+<!-- 2. Test OAUTH2 flow  -->
+
+<html>
+    <head>
+        <script src="./fhir-client.js"></script>
+    </head>
+    <body>
+        <h1>SMART FHIR</h1>
+    </body>
+    <script>
+        // 1. test open FHIR server 
+        var client = FHIR.client("https://r3.smarthealthit.org")
+        client.request("Patient").then(console.log).catch(console.error)
+    </script>
+</html>
