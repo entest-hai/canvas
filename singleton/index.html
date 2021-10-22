@@ -1,0 +1,57 @@
+<!-- 22 OCT 2021 TRAN MINH HAI test singleton object  -->
+<html>
+    <head></head>
+    <body>
+        <h1>Singleton</h1>
+    </body>
+    <script>
+        class UserSession{
+            constructor(){
+                if(UserSession.instance == null){
+                    this.user = {
+                        name: null,
+                        password: null
+                    }
+                    UserSession.instance = this
+                }
+                return UserSession.instance
+            }
+
+            getUser(){
+                // do auth api here 
+                this.user = {
+                    name: "hai",
+                    password: "123456"
+                }
+            }
+        }
+
+        class Logger{
+            constructor(){
+                if (Logger.instance == null){
+                    console.log("first time create instance")
+                    this.logs = []
+                    // like satic method on this class
+                    Logger.instance = this
+                }
+                return Logger.instance
+            }
+
+            log(message){
+                this.logs.push(message)
+                console.log(this.logs)
+            }
+        }
+
+        // two loger same object 
+        logger1 = new Logger()
+        logger2 = new Logger()
+        // user session 
+        user1 = new UserSession()
+        user1.getUser()
+        console.log(user1.user)    
+
+
+        console.log("OK")
+    </script>
+</html>
