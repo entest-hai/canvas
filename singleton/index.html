@@ -5,6 +5,26 @@
         <h1>Singleton</h1>
     </body>
     <script>
+
+        class UserProfile{
+            static instance = null
+
+            constructor(){
+                console.log("create user profile")
+                this.name = "hai"
+            }
+
+            static getInstance(){
+                if (this.instance == null){
+                    this.instance = new UserProfile()
+                } else {
+                    console.log("user profile already exist")
+                }
+                return this.instance
+            }
+        }
+
+
         class UserSession{
             constructor(){
                 if(UserSession.instance == null){
@@ -50,7 +70,11 @@
         user1 = new UserSession()
         user1.getUser()
         console.log(user1.user)    
-
+        // user profile 
+        profile1 = UserProfile.getInstance()
+        profile2 = UserProfile.getInstance()
+        console.log(profile1.name)
+        console.log(profile2.name)
 
         console.log("OK")
     </script>
