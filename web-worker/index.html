@@ -1,0 +1,41 @@
+<html>
+    <head></head>
+    <body>
+        <header>
+            <h1>Web Worker</h1>
+        </header>
+        <main>
+            <pre id="output"></pre>
+        </main>
+        <script>
+            let output = document.getElementById("output")
+            let worker 
+            document.addEventListener('DOMContentLoaded', init)
+
+            function init(){
+                // create worker 
+                worker = new Worker('script.js')
+                // add message listener 
+                worker.addEventListener('message', workerMessaged)
+                // add error listener 
+                worker.addEventListener('error', workerError)
+                // worker post a message 
+                worker.postMessage('Get Started')
+                document.body.addEventListener('click', () => {
+                    worker.postMessage('Other')
+                })
+            }
+
+            // get called when self.postMessage called 
+            function workerMessaged(ev){
+                console.log('worker messaged called: ', ev.data)
+                output.textContent = ev.data
+            }
+
+            function workerError(err){
+                console.log(err.message, err.filename)
+            }
+
+        </script>
+    </body>
+</html>
