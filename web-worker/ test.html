@@ -1,0 +1,30 @@
+<html>
+    <head></head>
+    <body>
+        <header>
+            <h1>Web Worker</h1>
+        </header>
+        <main>
+            <pre id="output"></pre>
+        </main>
+        <script>
+            let output = document.getElementById("output")
+            let worker 
+            document.addEventListener('DOMContentLoaded', init)
+
+            function init(){
+                // create worker 
+                worker = new Worker('script.js')
+                // add message listener 
+                worker.addEventListener('message', (ev) => {
+                    console.log("worker message called: ", ev.data)
+                    output.textContent = ev.data
+                })
+                // add error listener 
+                worker.addEventListener('error', (err) => {
+                    console.log(err.message, err.filename)
+                })
+            }
+        </script>
+    </body>
+</html>

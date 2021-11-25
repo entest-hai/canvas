@@ -1,0 +1,49 @@
+<!-- 25 NOV 2021 TRAN MINH HAI async await versus promise -->
+<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+
+<body>
+    <div>
+        <img src="./../images/STG049B_raw_ctg.png"></img>
+    </div>
+</body>
+<script>
+
+    function testPromise() {
+        console.log("test promise")
+        let myPromise = new Promise(function (accept, reject) {
+            let x = 0
+            if (x == 0) {
+                accept("OK")
+            } else {
+                reject("Error")
+            }
+        })
+        return myPromise
+    }
+
+    async function fetchImage() {
+        let response = await fetch("./../images/STG049B_raw_ctg.png")
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        console.log("got image, ", response)
+        return await response.blob();
+    }
+
+    fetchImage()
+        .catch(e => {
+            console.log("error load image", e)
+        })
+
+    testPromise().then(
+        function (value) { console.log("processing value", value) },
+        function (error) { console.log("print error, ", error) }
+    )
+
+</script>
+
+</html>

@@ -1,0 +1,28 @@
+<html>
+    <header></header>
+    <body>
+        <h1>
+            Download S3 blob 
+        </h1>
+        <script>
+            console.log("download file from s3")
+            download()
+
+            var fileReader = new FileReader()
+
+            fileReader.onload  = function(){
+                console.log(JSON.parse(this.result))
+            }
+
+            function download(){
+                fetch("https://get.geojs.io/v1/ip/geo.json")
+                .then(response => response.blob())
+                .then(blob => {
+                    fileReader.readAsText(blob)        
+                })
+                .catch(console.error)
+            }
+
+        </script>
+    </body>
+</html>
