@@ -1,0 +1,58 @@
+<!-- 31 DEC HAI TRAN  -->
+<!-- position fixed works simiar to to display flex -->
+<!-- in which each element shrink to it occupied size -->
+
+<html>
+
+<head></head>
+
+<body style="margin: 0;">
+    <header style="
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        background-color: gainsboro;
+        ">
+        <div>
+            Logo
+        </div>
+        <nav style="
+            background-color: pink;
+            flex-grow: 1;
+            padding: 2px;
+            ">
+            <ul style="
+                margin: 0;
+                padding: 0;
+                background-color: lightblue;
+                height: 100%;
+                list-style: none; 
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+                ">
+                <li>
+                    <a href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#">Practice</a>
+                </li>
+                <li>
+                    <a href="#">Contribute</a>
+                </li>
+                <li style="margin-top: auto;">
+                    <a href="#">Log In</a>
+                </li>
+                <li>
+                    <a href="#">Sign Up</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</body>
+
+</html>
