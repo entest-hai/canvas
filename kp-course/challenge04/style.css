@@ -73,6 +73,11 @@ header {
     padding: .5em 0;
 }
 
+
+.nav__item {
+    margin-right: 1em;
+}
+
 .nav__list {
     margin: 0;
     padding: 0;
